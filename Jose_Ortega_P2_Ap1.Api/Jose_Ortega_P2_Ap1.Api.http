@@ -1,0 +1,6 @@
+@Jose_Ortega_P2_Ap1.Api_HostAddress = http://localhost:5004
+
+GET {{Jose_Ortega_P2_Ap1.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

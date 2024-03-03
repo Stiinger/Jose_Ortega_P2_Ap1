@@ -1,0 +1,10 @@
+﻿@page "/Edit"
+@page "/Edit/Id={nameId:int}"
+@inject HttpClient httpClient
+
+<h3>Edit</h3>
+
+@code {
+    [Parameter]
+    public int nameId { get; set; }
+}

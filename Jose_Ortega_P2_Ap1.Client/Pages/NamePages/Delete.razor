@@ -1,0 +1,10 @@
+﻿@page "/Delete"
+@page "/Delete/Id={nameId:int}"
+@inject HttpClient httpClient
+
+<h3>Delete</h3>
+
+@code {
+    [Parameter]
+    public int nameId { get; set; }
+}
