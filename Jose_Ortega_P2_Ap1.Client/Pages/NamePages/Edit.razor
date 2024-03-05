@@ -171,6 +171,7 @@
             listaDetalles.Add(Detalle);
             Detalle = new VehiculosDetalle();
             Mensaje = string.Empty;
+            vehiculo.Gastos += Detalle.Valor;
         }
         else
             Mensaje = "No pueden haber campos vacíos.";
@@ -179,6 +180,7 @@
     public void Remover(VehiculosDetalle detalle)
     {
         Detalle = detalle;
+        vehiculo.Gastos -= Detalle.Valor;
         listaDetalles.Remove(detalle);
         detallesEliminados.Add(detalle);
         Detalle = new VehiculosDetalle();
