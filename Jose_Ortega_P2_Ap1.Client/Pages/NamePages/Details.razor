@@ -1,11 +1,101 @@
 ﻿@page "/Details"
-@page "/Details/Id={nameId:int}"
+@page "/Details/Id={vehiculoId:int}"
+
 @inject HttpClient httpClient
 
-<h3>Details</h3>
-
+<PageTitle>Detalles de Veh&iacute;culos</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h3><strong>Informaci&oacute;n de Veh&iacute;culo</strong></h3>
+        </div>
+        <div class="card-body">
+            <h4><strong>Informaci&oacute;n del Veh&iacute;culo #@vehiculo.VehiculoId</strong></h4>
+            <div>
+                <p class="mb-2"><strong>Vehiculo Id:</strong> @vehiculo.VehiculoId</p>
+            </div>
+            <div>
+                <p class="mb-2"><strong>Fecha:</strong> @vehiculo.Fecha.ToShortDateString()</p>
+            </div>
+            <div>
+                <p class="mb-2"><strong>Descripci&oacute;n</strong> @vehiculo.Descripcion</p>
+            </div>
+            <div>
+                <p class="mb-2"><strong>Costo:</strong> @vehiculo.Descripcion</p>
+            </div>
+            <div>
+                <p class="mb-2"><strong>Gastos:</strong> @vehiculo.Gastos</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h3><strong>Detalles Veh&iacute;culo</strong></h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Accesorio</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detalle in listaDetalles)
+                    {
+                        <tr>
+                            <td>@BuscarNombreAccesorio(detalle.AccesorioId)</td>
+                            <td>@detalle.Valor</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="col d-flex justify-content-end"><a href="/Index" class="btn btn-dark"> Volver</a></div>
+        </div>
+    </div>
+    @Mensaje
+</div>
 
 @code {
     [Parameter]
-    public int nameId { get; set; }
+    public int vehiculoId { get; set; }
+    public Vehiculos vehiculo { get; set; } = new Vehiculos();
+    public string Mensaje { get; set; } = string.Empty;
+    public List<VehiculosDetalle> listaDetalles = new List<VehiculosDetalle>();
+    public List<Vehiculos> listaVehiculos = new List<Vehiculos>();
+    public List<Accesorios> listaAccesorios = new List<Accesorios>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        vehiculo.VehiculoId = vehiculoId;
+        listaAccesorios = (await httpClient.GetFromJsonAsync<List<Accesorios>>("api/Accesorios"))!;
+
+        listaDetalles = (await httpClient
+                        .GetFromJsonAsync<List<VehiculosDetalle>>("api/VehiculosDetalles"))!
+                        .Where(v => v.VehiculoId == vehiculo.VehiculoId)
+                        .ToList();
+        await Buscar();
+    }
+
+    public async Task Buscar()
+    {
+        var ticketEncontrado = await httpClient.GetFromJsonAsync<Vehiculos>("api/Vehiculos/" + vehiculoId);
+        if (ticketEncontrado != null)
+        {
+            vehiculo = ticketEncontrado;
+            listaDetalles = (await httpClient.GetFromJsonAsync<List<VehiculosDetalle>>("api/VehiculosDetalles"))!.Where(v => v.VehiculoId == vehiculoId).ToList();
+        }
+        else
+            Mensaje = "No se ha encontrado el vehículo.";
+    }
+
+    public string BuscarNombreAccesorio(int id)
+    {
+        var buscado = listaAccesorios.FirstOrDefault(n => n.AccesorioId == id);
+        return buscado!.Descripcion;
+    }
 }
