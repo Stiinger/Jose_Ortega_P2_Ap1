@@ -150,6 +150,7 @@
         if (Detalle.Valor > 0)
         {
             listaDetalles.Add(Detalle);
+            vehiculo.Gastos += Detalle.Valor;
             Detalle = new VehiculosDetalle();
             Mensaje = string.Empty;
         }
@@ -160,6 +161,7 @@
     public void Remover(VehiculosDetalle detalle)
     {
         Detalle = detalle;
+        vehiculo.Gastos -= Detalle.Valor;
         listaDetalles.Remove(detalle);
         Detalle = new VehiculosDetalle();
     }
