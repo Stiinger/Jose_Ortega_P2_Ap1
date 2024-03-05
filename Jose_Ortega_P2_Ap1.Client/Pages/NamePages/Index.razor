@@ -98,8 +98,8 @@
                                     <td>@vehiculo.VehiculoId</td>
                                     <td>@vehiculo.Fecha.ToShortDateString()</td>
                                     <td>@vehiculo.Descripcion</td>
-                                    <td>@vehiculo.Costo</td>
-                                    <td>@vehiculo.Gastos</td>
+                                    <td>@vehiculo.Costo.ToString("N2")</td>
+                                    <td>@vehiculo.Gastos.ToString("N2")</td>
                                     <td><button type="button" class="btn btn-info" @onclick="(e) => IrDetalle(vehiculo.VehiculoId)"><i class="bi bi-eye"></i> Detalles</button></td>
                                     <td><button type="button" class="btn btn-warning" @onclick="(e) => IrEditar(vehiculo.VehiculoId)"><i class="bi bi-pencil-square"></i> Editar</button></td>
                                     <td><button type="button" class="btn btn-danger" @onclick="(e) => IrEliminar(vehiculo.VehiculoId)"><i class="bi bi-trash3-fill"></i> Eliminar</button></td>
