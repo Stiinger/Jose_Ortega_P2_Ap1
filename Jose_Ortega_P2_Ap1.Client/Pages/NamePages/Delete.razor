@@ -22,10 +22,10 @@
 				<p class="mb-2"><strong>Descripci&oacute;n:</strong> @vehiculo.Descripcion</p>
 			</div>
 			<div>
-				<p class="mb-2"><strong>Costo:</strong> @vehiculo.Costo</p>
+				<p class="mb-2"><strong>Costo:</strong> @vehiculo.Costo.ToString("N2")</p>
 			</div>
 			<div>
-				<p class="mb-2"><strong>Gastos:</strong> @vehiculo.Gastos</p>
+				<p class="mb-2"><strong>Gastos:</strong> @vehiculo.Gastos.ToString("N2")</p>
 			</div>
 			<button type="button" class="btn btn-danger" @onclick="Eliminar"><i class="bi bi-trash3"></i> Eliminar</button>
 			<button type="button" class="btn btn-dark" @onclick="VolverAtras"><i class="bi bi-x-octagon"></i> Cancelar</button>
