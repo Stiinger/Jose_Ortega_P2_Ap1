@@ -169,9 +169,9 @@
         if (Detalle.Valor > 0)
         {
             listaDetalles.Add(Detalle);
+            vehiculo.Gastos += Detalle.Valor;
             Detalle = new VehiculosDetalle();
             Mensaje = string.Empty;
-            vehiculo.Gastos += Detalle.Valor;
         }
         else
             Mensaje = "No pueden haber campos vacíos.";
