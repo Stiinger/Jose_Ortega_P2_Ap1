@@ -83,10 +83,10 @@
 
     public async Task Buscar()
     {
-        var ticketEncontrado = await httpClient.GetFromJsonAsync<Vehiculos>("api/Vehiculos/" + vehiculoId);
-        if (ticketEncontrado != null)
+        var vehiculoEncontrado = await httpClient.GetFromJsonAsync<Vehiculos>("api/Vehiculos/" + vehiculoId);
+        if (vehiculoEncontrado != null)
         {
-            vehiculo = ticketEncontrado;
+            vehiculo = vehiculoEncontrado;
             listaDetalles = (await httpClient.GetFromJsonAsync<List<VehiculosDetalle>>("api/VehiculosDetalles"))!.Where(v => v.VehiculoId == vehiculoId).ToList();
         }
         else
